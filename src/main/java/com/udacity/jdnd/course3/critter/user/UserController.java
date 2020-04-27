@@ -1,5 +1,10 @@
 package com.udacity.jdnd.course3.critter.user;
 
+import com.udacity.jdnd.course3.critter.pet.contracts.IPetService;
+import com.udacity.jdnd.course3.critter.user.db.CustomerEntity;
+import com.udacity.jdnd.course3.critter.user.db.EmployeeEntity;
+import com.udacity.jdnd.course3.critter.user.db.contract.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.DayOfWeek;
@@ -8,7 +13,7 @@ import java.util.Set;
 
 /**
  * Handles web requests related to Users.
- *
+ * <p>
  * Includes requests for both customers and employees. Splitting this into separate user and customer controllers
  * would be fine too, though that is not part of the required scope for this class.
  */
@@ -16,29 +21,38 @@ import java.util.Set;
 @RequestMapping("/user")
 public class UserController {
 
+    @Autowired
+    private IUserService userService;
+
     @PostMapping("/customer")
-    public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO){
-        throw new UnsupportedOperationException();
+    public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO) {
+        CustomerEntity entity = userService.saveCustomer(UserMapper.convertDTOToEntity(customerDTO));
+        return UserMapper.convertEntityToDTO(entity);
     }
 
     @GetMapping("/customer")
-    public List<CustomerDTO> getAllCustomers(){
-        throw new UnsupportedOperationException();
+    public List<CustomerDTO> getAllCustomers() {
+       return UserMapper.convertEntityToDTO(userService.getCustomers());
     }
 
     @GetMapping("/customer/pet/{petId}")
-    public CustomerDTO getOwnerByPet(@PathVariable long petId){
-        throw new UnsupportedOperationException();
+    public CustomerDTO getOwnerByPet(@PathVariable long petId) {
+        return UserMapper.convertEntityToDTO(userService.getCustomerByPetId(petId));
     }
 
     @PostMapping("/employee")
     public EmployeeDTO saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        throw new UnsupportedOperationException();
+        EmployeeEntity entity = userService.saveEmployee(UserMapper.convertDTOToEntity(employeeDTO));
+        return UserMapper.convertEntityToDTO(entity);
     }
 
     @PostMapping("/employee/{employeeId}")
     public EmployeeDTO getEmployee(@PathVariable long employeeId) {
-        throw new UnsupportedOperationException();
+        if (userService.getEmployeeById(employeeId).isPresent()) {
+            return UserMapper.convertEntityToDTO(userService.getEmployeeById(employeeId).get());
+        } else {
+            return null;
+        }
     }
 
     @PutMapping("/employee/{employeeId}")
