@@ -1,5 +1,7 @@
 package com.udacity.jdnd.course3.critter.user.db;
 
+import com.udacity.jdnd.course3.critter.pet.PetEntity;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -18,9 +20,8 @@ public class CustomerEntity {
     private String phoneNumber;
     private String notes;
 
-    @Column
-    @ElementCollection(targetClass=Integer.class)
-    private List<Long> petIds;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, targetEntity = PetEntity.class)
+    private List<PetEntity> pets;
 
     public long getId() {
         return id;
@@ -54,11 +55,11 @@ public class CustomerEntity {
         this.notes = notes;
     }
 
-    public List<Long> getPetIds() {
-        return petIds;
+    public List<PetEntity> getPets() {
+        return pets;
     }
 
-    public void setPetIds(List<Long> petIds) {
-        this.petIds = petIds;
+    public void setPets(List<PetEntity> pets) {
+        this.pets = pets;
     }
 }

@@ -2,7 +2,6 @@ package com.udacity.jdnd.course3.critter.user.db;
 
 import com.udacity.jdnd.course3.critter.pet.PetEntity;
 import com.udacity.jdnd.course3.critter.pet.contracts.IPetRepository;
-import com.udacity.jdnd.course3.critter.pet.contracts.IPetService;
 import com.udacity.jdnd.course3.critter.user.db.contract.ICustomerRepository;
 import com.udacity.jdnd.course3.critter.user.db.contract.IEmployeeRepository;
 import com.udacity.jdnd.course3.critter.user.db.contract.IUserService;
@@ -20,6 +19,9 @@ public class UserService implements IUserService {
 
     @Autowired
     private IEmployeeRepository employeeRepository;
+
+    @Autowired
+    private IPetRepository petRepository;
 
     @Override
     public List<EmployeeEntity> getEmployees() {
@@ -47,12 +49,13 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Optional<CustomerEntity> getCustomerById(long petId) {
-        return customerRepository.findById(petId);
+    public Optional<CustomerEntity> getCustomerById(long customerId) {
+        return customerRepository.findById(customerId);
     }
 
     @Override
     public CustomerEntity getCustomerByPetId(long petId) {
-        return customerRepository.findByPetId(petId);
+        PetEntity pet = petRepository.getOne(petId);
+        return customerRepository.findByPets(pet);
     }
 }

@@ -19,20 +19,19 @@ public class EmployeeEntity {
     @GeneratedValue
     private long id;
 
-    //use "org.hibernate.type.StringNVarcharType")
     @Nationalized
     private String name;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     @Column(name = "skills")
-    @CollectionTable(name = "skills", joinColumns = @JoinColumn(name = "employee_id"))
+    @CollectionTable(name = "employee_skills", joinColumns = @JoinColumn(name = "employee_id"))
     private Set<EmployeeSkill> skills;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     @Column(name = "days")
-    @CollectionTable(name = "days", joinColumns = @JoinColumn(name = "employee_id"))
+    @CollectionTable(name = "employee_days", joinColumns = @JoinColumn(name = "employee_id"))
     private Set<DayOfWeek> daysAvailable;
 
 

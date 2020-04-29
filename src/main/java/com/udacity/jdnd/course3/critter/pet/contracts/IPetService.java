@@ -9,5 +9,5 @@ public interface IPetService {
     List<PetEntity> getPets();
     PetEntity savePet(PetEntity petEntity);
     Optional<PetEntity> getPetById(long petId);
-    List<PetEntity> getPetsByOwnerId(long ownerId);
+    List<PetEntity> getPetsByCustomer(long ownerId);
 }

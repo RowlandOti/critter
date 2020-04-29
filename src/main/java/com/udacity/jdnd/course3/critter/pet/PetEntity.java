@@ -1,9 +1,9 @@
 package com.udacity.jdnd.course3.critter.pet;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.udacity.jdnd.course3.critter.user.db.CustomerEntity;
+import com.udacity.jdnd.course3.critter.user.db.EmployeeEntity;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 
 /**
@@ -18,7 +18,11 @@ public class PetEntity {
     private long id;
     private PetType type;
     private String name;
-    private long ownerId;
+
+    @ManyToOne(cascade = CascadeType.REFRESH, targetEntity = CustomerEntity.class)
+    @JoinColumn(name = "customer_id")
+    private CustomerEntity customer;
+
     private LocalDate birthDate;
     private String notes;
 
@@ -38,12 +42,12 @@ public class PetEntity {
         this.name = name;
     }
 
-    public long getOwnerId() {
-        return ownerId;
+    public CustomerEntity getCustomer() {
+        return customer;
     }
 
-    public void setOwnerId(long ownerId) {
-        this.ownerId = ownerId;
+    public void setCustomer(CustomerEntity customer) {
+        this.customer = customer;
     }
 
     public LocalDate getBirthDate() {
