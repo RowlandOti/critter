@@ -1,10 +1,10 @@
 package com.udacity.jdnd.course3.critter.user.db;
 
 import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
+import org.hibernate.annotations.Nationalized;
+import org.hibernate.annotations.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.util.Set;
 
@@ -13,13 +13,29 @@ import java.util.Set;
  * to the database directly.
  */
 @Entity
+@Table(name = "employee")
 public class EmployeeEntity {
     @Id
     @GeneratedValue
     private long id;
+
+    //use "org.hibernate.type.StringNVarcharType")
+    @Nationalized
     private String name;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "skills")
+    @CollectionTable(name = "skills", joinColumns = @JoinColumn(name = "employee_id"))
     private Set<EmployeeSkill> skills;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "days")
+    @CollectionTable(name = "days", joinColumns = @JoinColumn(name = "employee_id"))
     private Set<DayOfWeek> daysAvailable;
+
+
 
     public long getId() {
         return id;

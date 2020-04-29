@@ -8,6 +8,8 @@ import java.util.Optional;
 public interface IScheduleService {
     List<ScheduleEntity> getSchedules();
     ScheduleEntity saveSchedule(ScheduleEntity entity);
-    Optional<ScheduleEntity> getScheduleById(long petId);
-    List<ScheduleEntity> getScheduleByEmployeeId(long ownerId);
+    Optional<ScheduleEntity> getScheduleById(long scheduleId);
+    List<ScheduleEntity> getSchedulesByPetId(long petId);
+    List<ScheduleEntity> getSchedulesByEmployeeId(long employeeId);
+    List<ScheduleEntity> getSchedulesByCustomerId(long customerId);
 }

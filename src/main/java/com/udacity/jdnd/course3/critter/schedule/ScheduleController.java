@@ -1,5 +1,9 @@
 package com.udacity.jdnd.course3.critter.schedule;
 
+import com.udacity.jdnd.course3.critter.schedule.db.ScheduleEntity;
+import com.udacity.jdnd.course3.critter.schedule.db.contracts.IScheduleService;
+import com.udacity.jdnd.course3.critter.user.db.contract.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,28 +15,33 @@ import java.util.List;
 @RequestMapping("/schedule")
 public class ScheduleController {
 
+    @Autowired
+    private IScheduleService scheduleService;
+
+
     @PostMapping
     public ScheduleDTO createSchedule(@RequestBody ScheduleDTO scheduleDTO) {
-        throw new UnsupportedOperationException();
+        ScheduleEntity entity =  scheduleService.saveSchedule(ScheduleMapper.convertDTOToEntity(scheduleDTO));
+        return ScheduleMapper.convertEntityToDTO(entity);
     }
 
     @GetMapping
     public List<ScheduleDTO> getAllSchedules() {
-        throw new UnsupportedOperationException();
+        return ScheduleMapper.convertEntityToDTO(scheduleService.getSchedules());
     }
 
     @GetMapping("/pet/{petId}")
     public List<ScheduleDTO> getScheduleForPet(@PathVariable long petId) {
-        throw new UnsupportedOperationException();
+        return ScheduleMapper.convertEntityToDTO(scheduleService.getSchedulesByPetId(petId));
     }
 
     @GetMapping("/employee/{employeeId}")
     public List<ScheduleDTO> getScheduleForEmployee(@PathVariable long employeeId) {
-        throw new UnsupportedOperationException();
+        return ScheduleMapper.convertEntityToDTO(scheduleService.getSchedulesByEmployeeId(employeeId));
     }
 
     @GetMapping("/customer/{customerId}")
     public List<ScheduleDTO> getScheduleForCustomer(@PathVariable long customerId) {
-        throw new UnsupportedOperationException();
+        return ScheduleMapper.convertEntityToDTO(scheduleService.getSchedulesByCustomerId(customerId));
     }
 }

@@ -1,8 +1,6 @@
 package com.udacity.jdnd.course3.critter.user.db;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -11,6 +9,7 @@ import java.util.List;
  */
 
 @Entity
+@Table(name = "customer")
 public class CustomerEntity {
     @Id
     @GeneratedValue
@@ -18,6 +17,9 @@ public class CustomerEntity {
     private String name;
     private String phoneNumber;
     private String notes;
+
+    @Column
+    @ElementCollection(targetClass=Integer.class)
     private List<Long> petIds;
 
     public long getId() {

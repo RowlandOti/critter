@@ -3,6 +3,7 @@ package com.udacity.jdnd.course3.critter.pet;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDate;
 
 /**
@@ -10,6 +11,7 @@ import java.time.LocalDate;
  * to the database directly.
  */
 @Entity
+@Table(name = "pet")
 public class PetEntity {
     @Id
     @GeneratedValue

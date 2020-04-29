@@ -8,6 +8,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface IPetRepository extends JpaRepository<PetEntity, Long> {
-    @Query("select p from Pet p where p.ownerId = :ownerId")
+    //@Query("select p from pet p where p.ownerId = :ownerId")
     List<PetEntity> findByOwnerId(long ownerId);
 }

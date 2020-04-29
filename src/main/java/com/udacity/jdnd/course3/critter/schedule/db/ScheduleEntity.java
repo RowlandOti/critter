@@ -2,9 +2,7 @@ package com.udacity.jdnd.course3.critter.schedule.db;
 
 import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -14,13 +12,25 @@ import java.util.Set;
  * to the database directly.
  */
 @Entity
+@Table(name = "schedule")
 public class ScheduleEntity {
     @Id
     @GeneratedValue
     private long id;
+
+    @Column
+    @ElementCollection(targetClass=Integer.class)
     private List<Long> employeeIds;
+
+    @Column
+    @ElementCollection(targetClass=Integer.class)
     private List<Long> petIds;
+
     private LocalDate date;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "skills", joinColumns = @JoinColumn(name = "employee_id"))
     private Set<EmployeeSkill> activities;
 
     public List<Long> getEmployeeIds() {
