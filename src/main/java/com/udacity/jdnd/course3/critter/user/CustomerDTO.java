@@ -2,6 +2,7 @@ package com.udacity.jdnd.course3.critter.user;
 
 import com.udacity.jdnd.course3.critter.pet.PetDTO;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +10,8 @@ import java.util.List;
  * Represents the form that customer request and response data takes. Does not map
  * to the database directly.
  */
-public class CustomerDTO {
-    private long id;
+public class CustomerDTO implements Serializable {
+    private long id= -1;
     private String name;
     private String phoneNumber;
     private String notes;
@@ -54,9 +55,5 @@ public class CustomerDTO {
 
     public void setPets(List<PetDTO> pets) {
         this.pets = pets;
-    }
-
-    public void setPet(PetDTO pets) {
-        this.pets.add(pets);
     }
 }

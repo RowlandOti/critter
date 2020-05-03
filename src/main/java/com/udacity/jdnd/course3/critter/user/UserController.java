@@ -1,6 +1,5 @@
 package com.udacity.jdnd.course3.critter.user;
 
-import com.udacity.jdnd.course3.critter.pet.contracts.IPetService;
 import com.udacity.jdnd.course3.critter.user.db.CustomerEntity;
 import com.udacity.jdnd.course3.critter.user.db.EmployeeEntity;
 import com.udacity.jdnd.course3.critter.user.db.contract.IUserService;
@@ -8,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.DayOfWeek;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -32,7 +32,7 @@ public class UserController {
 
     @GetMapping("/customer")
     public List<CustomerDTO> getAllCustomers() {
-       return UserMapper.convertEntityToDTO(userService.getCustomers());
+        return UserMapper.convertEntityToDTO(userService.getCustomers());
     }
 
     @GetMapping("/customer/pet/{petId}")
@@ -57,12 +57,19 @@ public class UserController {
 
     @PutMapping("/employee/{employeeId}")
     public void setAvailability(@RequestBody Set<DayOfWeek> daysAvailable, @PathVariable long employeeId) {
-        throw new UnsupportedOperationException();
+        if (userService.getEmployeeById(employeeId).isPresent()) {
+            EmployeeEntity employee = userService.getEmployeeById(employeeId).get();
+            employee.setDaysAvailable(daysAvailable);
+            userService.saveEmployee(employee);
+        }
     }
 
     @GetMapping("/employee/availability")
-    public List<EmployeeDTO> findEmployeesForService(@RequestBody EmployeeRequestDTO employeeDTO) {
-        throw new UnsupportedOperationException();
+    public List<EmployeeDTO> findEmployeesForService(@RequestBody EmployeeRequestDTO employee) {
+        Set<DayOfWeek> daysAvailable = new HashSet<>();
+        daysAvailable.add(employee.getDate().getDayOfWeek());
+
+        return UserMapper.convertEmployeeEntityToDTO(userService.getEmployeeForService(employee.getSkills(), daysAvailable));
     }
 
 }

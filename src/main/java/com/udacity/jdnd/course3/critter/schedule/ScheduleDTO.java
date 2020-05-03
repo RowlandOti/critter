@@ -1,5 +1,7 @@
 package com.udacity.jdnd.course3.critter.schedule;
 
+import com.udacity.jdnd.course3.critter.pet.PetDTO;
+import com.udacity.jdnd.course3.critter.user.EmployeeDTO;
 import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
 
 import java.time.LocalDate;
@@ -11,26 +13,26 @@ import java.util.Set;
  * to the database directly.
  */
 public class ScheduleDTO {
-    private long id;
-    private List<Long> employeeIds;
-    private List<Long> petIds;
+    private long id = -1;
+    private List<EmployeeDTO> employees;
+    private List<PetDTO> pets;
     private LocalDate date;
     private Set<EmployeeSkill> activities;
 
-    public List<Long> getEmployeeIds() {
-        return employeeIds;
+    public List<EmployeeDTO> getEmployees() {
+        return employees;
     }
 
-    public void setEmployeeIds(List<Long> employeeIds) {
-        this.employeeIds = employeeIds;
+    public void setEmployees(List<EmployeeDTO> employees) {
+        this.employees = employees;
     }
 
-    public List<Long> getPetIds() {
-        return petIds;
+    public List<PetDTO> getPets() {
+        return pets;
     }
 
-    public void setPetIds(List<Long> petIds) {
-        this.petIds = petIds;
+    public void setPets(List<PetDTO> petIds) {
+        this.pets = petIds;
     }
 
     public LocalDate getDate() {

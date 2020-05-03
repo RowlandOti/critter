@@ -8,7 +8,7 @@ import java.util.Set;
  * to the database directly.
  */
 public class EmployeeDTO {
-    private long id;
+    private long id = -1;
     private String name;
     private Set<EmployeeSkill> skills;
     private Set<DayOfWeek> daysAvailable;

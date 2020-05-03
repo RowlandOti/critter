@@ -1,7 +1,6 @@
 package com.udacity.jdnd.course3.critter.pet;
 
 import com.udacity.jdnd.course3.critter.user.db.CustomerEntity;
-import com.udacity.jdnd.course3.critter.user.db.EmployeeEntity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -13,13 +12,16 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "pet")
 public class PetEntity {
+
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue
-    private long id;
+    private long id = -1;
     private PetType type;
     private String name;
 
-    @ManyToOne(cascade = CascadeType.REFRESH, targetEntity = CustomerEntity.class)
+    @ManyToOne(cascade = CascadeType.ALL, targetEntity = CustomerEntity.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private CustomerEntity customer;
 
@@ -72,5 +74,18 @@ public class PetEntity {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PetEntity )) return false;
+        return id != -1 && id == ((PetEntity) o).getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return 31;
     }
 }

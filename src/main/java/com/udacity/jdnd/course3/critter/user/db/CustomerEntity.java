@@ -3,6 +3,8 @@ package com.udacity.jdnd.course3.critter.user.db;
 import com.udacity.jdnd.course3.critter.pet.PetEntity;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,16 +14,17 @@ import java.util.List;
 
 @Entity
 @Table(name = "customer")
-public class CustomerEntity {
+public class CustomerEntity implements Serializable {
     @Id
     @GeneratedValue
-    private long id;
+    private long id = -1;
     private String name;
     private String phoneNumber;
     private String notes;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, targetEntity = PetEntity.class)
-    private List<PetEntity> pets;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, targetEntity = PetEntity.class,
+            orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<PetEntity> pets = new ArrayList<>();
 
     public long getId() {
         return id;

@@ -1,5 +1,8 @@
 package com.udacity.jdnd.course3.critter.pet;
 
+import com.udacity.jdnd.course3.critter.user.CustomerDTO;
+import com.udacity.jdnd.course3.critter.user.db.CustomerEntity;
+
 import java.time.LocalDate;
 
 /**
@@ -7,10 +10,10 @@ import java.time.LocalDate;
  * to the database directly.
  */
 public class PetDTO {
-    private long id;
+    private long id = -1;
     private PetType type;
     private String name;
-    private long ownerId;
+    private CustomerDTO customer;
     private LocalDate birthDate;
     private String notes;
 
@@ -30,12 +33,12 @@ public class PetDTO {
         this.name = name;
     }
 
-    public long getOwnerId() {
-        return ownerId;
+    public CustomerDTO getCustomer() {
+        return customer;
     }
 
-    public void setOwnerId(long ownerId) {
-        this.ownerId = ownerId;
+    public void setCustomer(CustomerDTO customer) {
+        this.customer = customer;
     }
 
     public LocalDate getBirthDate() {

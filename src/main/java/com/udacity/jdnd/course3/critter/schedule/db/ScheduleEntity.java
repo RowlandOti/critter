@@ -18,7 +18,7 @@ import java.util.Set;
 public class ScheduleEntity {
     @Id
     @GeneratedValue
-    private long id;
+    private long id = -1;
 
     @ManyToOne(targetEntity = EmployeeEntity.class)
     @JoinColumn(name = "employee_id")

@@ -5,6 +5,7 @@ import org.hibernate.annotations.Nationalized;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.util.Set;
 
@@ -14,10 +15,13 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "employee")
-public class EmployeeEntity {
+public class EmployeeEntity implements Serializable {
+
+    private static final long serialVersionUID = 2L;
+
     @Id
     @GeneratedValue
-    private long id;
+    private long id = -1;
 
     @Nationalized
     private String name;
