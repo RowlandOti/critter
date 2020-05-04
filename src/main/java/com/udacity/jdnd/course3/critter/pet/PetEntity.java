@@ -1,9 +1,11 @@
 package com.udacity.jdnd.course3.critter.pet;
 
+import com.udacity.jdnd.course3.critter.schedule.db.ScheduleEntity;
 import com.udacity.jdnd.course3.critter.user.db.CustomerEntity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Represents the form that pet request and response data takes.  Maps
@@ -21,9 +23,12 @@ public class PetEntity {
     private PetType type;
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL, targetEntity = CustomerEntity.class, fetch = FetchType.EAGER)
-    @JoinColumn(name = "customer_id")
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, targetEntity = CustomerEntity.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "customer_id", insertable = false, updatable = false)
     private CustomerEntity customer;
+
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "pets", targetEntity = ScheduleEntity.class, fetch = FetchType.LAZY)
+    private List<ScheduleEntity> schedules;
 
     private LocalDate birthDate;
     private String notes;

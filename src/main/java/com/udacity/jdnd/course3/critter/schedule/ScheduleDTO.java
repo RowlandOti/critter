@@ -19,6 +19,14 @@ public class ScheduleDTO {
     private LocalDate date;
     private Set<EmployeeSkill> activities;
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public List<EmployeeDTO> getEmployees() {
         return employees;
     }
@@ -31,8 +39,8 @@ public class ScheduleDTO {
         return pets;
     }
 
-    public void setPets(List<PetDTO> petIds) {
-        this.pets = petIds;
+    public void setPets(List<PetDTO> pets) {
+        this.pets = pets;
     }
 
     public LocalDate getDate() {

@@ -24,7 +24,7 @@ public class ScheduleEntity {
     @JoinColumn(name = "employee_id")
     private List<EmployeeEntity> employees;
 
-    @ManyToOne(targetEntity = EmployeeEntity.class)
+    @ManyToOne(targetEntity = PetEntity.class)
     @JoinColumn(name = "pet_id")
     private List<PetEntity> pets;
 
@@ -34,6 +34,14 @@ public class ScheduleEntity {
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "schedule_skills", joinColumns = @JoinColumn(name = "employee_id"))
     private Set<EmployeeSkill> activities;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public List<EmployeeEntity> getEmployees() {
         return employees;

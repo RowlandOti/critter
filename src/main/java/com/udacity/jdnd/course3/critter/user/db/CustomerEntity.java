@@ -1,6 +1,7 @@
 package com.udacity.jdnd.course3.critter.user.db;
 
 import com.udacity.jdnd.course3.critter.pet.PetEntity;
+import com.udacity.jdnd.course3.critter.schedule.db.ScheduleEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,9 +23,14 @@ public class CustomerEntity implements Serializable {
     private String phoneNumber;
     private String notes;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, targetEntity = PetEntity.class,
-            orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, targetEntity = PetEntity.class, orphanRemoval = true,
+            fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id")
     private List<PetEntity> pets = new ArrayList<>();
+
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "employees", targetEntity = ScheduleEntity.class,
+            fetch = FetchType.LAZY)
+    private List<ScheduleEntity> schedules;
 
     public long getId() {
         return id;

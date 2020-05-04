@@ -13,6 +13,7 @@ public class ScheduleMapper {
         if(entity != null) {
             ScheduleDTO dto = new ScheduleDTO();
             //BeanUtils.copyProperties(dto, entity);
+            dto.setId(entity.getId());
             dto.setActivities(entity.getActivities());
             dto.setDate(entity.getDate());
             dto.setEmployees(UserMapper.convertEmployeeEntityToDTO(entity.getEmployees()));
@@ -33,6 +34,7 @@ public class ScheduleMapper {
         if(dto != null) {
             ScheduleEntity entity = new ScheduleEntity();
             //BeanUtils.copyProperties(entity, dto);
+            entity.setId(dto.getId());
             entity.setActivities(dto.getActivities());
             entity.setDate(dto.getDate());
             entity.setEmployees(UserMapper.convertEmployeeDTOToEntity(dto.getEmployees()));
