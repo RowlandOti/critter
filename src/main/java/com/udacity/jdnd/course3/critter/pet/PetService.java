@@ -26,7 +26,7 @@ public class PetService implements IPetService {
 
     @Override
     public PetEntity savePet(PetEntity pet, long customerId) {
-        if(customerId != 0) {
+        if (customerId != 0) {
             return savePetWithCustomer(pet, customerId);
         }
         return petRepository.save(pet);
@@ -35,15 +35,17 @@ public class PetService implements IPetService {
     public PetEntity savePetWithCustomer(PetEntity pet, long customerId) {
         Optional<CustomerEntity> customerOpt = customerRepository.findById(customerId);
 
-        if(customerOpt.isPresent())  {
+        if (customerOpt.isPresent()) {
             CustomerEntity customer = customerOpt.get();
             pet.setCustomer(customer);
             pet = petRepository.save(pet);
 
             customer.getPets().add(pet);
             customerRepository.save(customer);
+
+            return pet;
         }
-        return pet;
+        return null;
     }
 
     @Override

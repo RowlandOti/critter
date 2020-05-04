@@ -40,8 +40,31 @@ public class ScheduleService implements IScheduleService {
     }
 
     @Override
-    public ScheduleEntity saveSchedule(ScheduleEntity entity) {
-        return scheduleRepository.save(entity);
+    public ScheduleEntity saveSchedule(ScheduleEntity entity, List<Long> employeeIds, List<Long> petIds) {
+
+        employeeIds.forEach(employeeId -> {
+            EmployeeEntity employee = employeeRepository.getOne(employeeId);
+            entity.getEmployees().add(employee);
+        });
+
+        petIds.forEach(petId -> {
+            PetEntity pet = petRepository.getOne(petId);
+            entity.getPets().add(pet);
+        });
+
+        ScheduleEntity schedule =  scheduleRepository.save(entity);
+
+        entity.getEmployees().forEach(employee -> {
+            employee.getSchedules().add(schedule);
+            employeeRepository.save(employee);
+        });
+
+        entity.getPets().forEach(pet -> {
+            pet.getSchedules().add(schedule);
+            petRepository.save(pet);
+        });
+
+        return schedule;
     }
 
     @Override

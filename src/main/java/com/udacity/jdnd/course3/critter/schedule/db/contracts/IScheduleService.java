@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface IScheduleService {
     List<ScheduleEntity> getSchedules();
-    ScheduleEntity saveSchedule(ScheduleEntity entity);
+    ScheduleEntity saveSchedule(ScheduleEntity entity, List<Long> employeeIds, List<Long> petIds);
     Optional<ScheduleEntity> getScheduleById(long scheduleId);
     List<ScheduleEntity> getSchedulesByPetId(long petId);
     List<ScheduleEntity> getSchedulesByEmployeeId(long employeeId);

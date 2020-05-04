@@ -6,6 +6,7 @@ import com.udacity.jdnd.course3.critter.user.db.CustomerEntity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,7 +35,7 @@ public class PetEntity implements Serializable {
     @JoinTable(
             joinColumns = @JoinColumn(referencedColumnName = "id", name = "pet_id"),
             inverseJoinColumns = @JoinColumn(referencedColumnName = "id", name = "schedule_id"))
-    private List<ScheduleEntity> schedules;
+    private List<ScheduleEntity> schedules = new ArrayList<>();
 
     public PetType getType() {
         return type;

@@ -7,6 +7,7 @@ import com.udacity.jdnd.course3.critter.user.db.EmployeeEntity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -25,10 +26,10 @@ public class ScheduleEntity implements Serializable {
     private long id;
 
     @ManyToMany(mappedBy = "schedules", targetEntity = EmployeeEntity.class)
-    private List<EmployeeEntity> employees;
+    private List<EmployeeEntity> employees = new ArrayList<>();
 
     @ManyToMany(mappedBy = "schedules", targetEntity = PetEntity.class)
-    private List<PetEntity> pets;
+    private List<PetEntity> pets = new ArrayList<>();
 
     private LocalDate date;
 
@@ -67,5 +68,13 @@ public class ScheduleEntity implements Serializable {
 
     public void setActivities(Set<EmployeeSkill> activities) {
         this.activities = activities;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

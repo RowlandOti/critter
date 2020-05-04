@@ -21,8 +21,13 @@ public class ScheduleController {
 
     @PostMapping
     public ScheduleDTO createSchedule(@RequestBody ScheduleDTO scheduleDTO) {
-        ScheduleEntity entity =  scheduleService.saveSchedule(ScheduleMapper.convertDTOToEntity(scheduleDTO));
-        return ScheduleMapper.convertEntityToDTO(entity);
+        List<Long> petIds = scheduleDTO.getPetIds();
+        List<Long> employeeIds = scheduleDTO.getEmployeeIds();
+
+        ScheduleEntity entity =  scheduleService.saveSchedule(ScheduleMapper.convertDTOToEntity(scheduleDTO), employeeIds, petIds);
+
+        scheduleDTO.setId(entity.getId());
+        return scheduleDTO;
     }
 
     @GetMapping
