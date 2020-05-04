@@ -15,6 +15,9 @@ public class PetMapper {
     public static PetDTO convertEntityToPetDTO(PetEntity petEntity) {
         PetDTO petDTO = new PetDTO();
         BeanUtils.copyProperties(petEntity, petDTO);
+
+        // As pets can't be added without owners, it is sure owned
+        petDTO.setOwnerId(petEntity.getCustomer().getId());
         return petDTO;
     }
 

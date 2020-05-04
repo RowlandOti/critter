@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface IPetService {
     List<PetEntity> getPets();
-    PetEntity savePet(PetEntity petEntity);
+    PetEntity savePet(PetEntity pet, long customerId);
     Optional<PetEntity> getPetById(long petId);
     List<PetEntity> getPetsByOwnerId(long ownerId);
 }

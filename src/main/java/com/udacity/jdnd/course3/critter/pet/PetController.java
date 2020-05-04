@@ -1,11 +1,9 @@
 package com.udacity.jdnd.course3.critter.pet;
 
 import com.udacity.jdnd.course3.critter.pet.contracts.IPetService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,7 +18,9 @@ public class PetController {
 
     @PostMapping
     public PetDTO savePet(@RequestBody PetDTO petDTO) {
-        return PetMapper.convertEntityToPetDTO(petService.savePet(PetMapper.convertDTOToPetEntity(petDTO)));
+        PetEntity entity = petService.savePet(PetMapper.convertDTOToPetEntity(petDTO), petDTO.getOwnerId());
+        petDTO.setId(entity.getId());
+        return petDTO;
     }
 
     @GetMapping("/{petId}")

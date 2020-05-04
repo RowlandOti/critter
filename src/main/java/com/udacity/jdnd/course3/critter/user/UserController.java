@@ -28,7 +28,8 @@ public class UserController {
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO) {
         CustomerEntity entity = userService.saveCustomer(UserMapper.convertDTOToEntity(customerDTO));
-        return UserMapper.convertEntityToDTO(entity);
+        customerDTO.setId(entity.getId());
+        return customerDTO;
     }
 
     @GetMapping("/customer")
@@ -44,7 +45,8 @@ public class UserController {
     @PostMapping("/employee")
     public EmployeeDTO saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
         EmployeeEntity entity = userService.saveEmployee(UserMapper.convertDTOToEntity(employeeDTO));
-        return UserMapper.convertEntityToDTO(entity);
+        employeeDTO.setId(entity.getId());
+        return employeeDTO;
     }
 
     @PostMapping("/employee/{employeeId}")

@@ -4,6 +4,7 @@ import com.udacity.jdnd.course3.critter.schedule.db.ScheduleEntity;
 import com.udacity.jdnd.course3.critter.user.db.CustomerEntity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -13,9 +14,12 @@ import java.util.List;
  */
 @Entity
 @Table(name = "pet")
-public class PetEntity {
+public class PetEntity implements Serializable {
+
+    private static final long serialVersionUID = 300L;
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private PetType type;
     private String name;
@@ -26,7 +30,7 @@ public class PetEntity {
     @JoinColumn(name = "customer_id")
     private CustomerEntity customer;
 
-    @ManyToMany(cascade = CascadeType.ALL, targetEntity = ScheduleEntity.class, fetch = FetchType.LAZY)
+    @ManyToMany(targetEntity = ScheduleEntity.class, fetch = FetchType.LAZY)
     @JoinTable(
             joinColumns = @JoinColumn(referencedColumnName = "id", name = "pet_id"),
             inverseJoinColumns = @JoinColumn(referencedColumnName = "id", name = "schedule_id"))

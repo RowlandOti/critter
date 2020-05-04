@@ -5,6 +5,7 @@ import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
 import org.hibernate.annotations.Nationalized;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.util.List;
 import java.util.Set;
@@ -15,9 +16,12 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "employee")
-public class EmployeeEntity {
+public class EmployeeEntity implements Serializable {
+
+    private static final long serialVersionUID = 100L;
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     //use "org.hibernate.type.StringNVarcharType")

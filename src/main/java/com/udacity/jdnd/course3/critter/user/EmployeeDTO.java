@@ -3,6 +3,8 @@ package com.udacity.jdnd.course3.critter.user;
 import com.udacity.jdnd.course3.critter.schedule.ScheduleDTO;
 
 import java.time.DayOfWeek;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -13,9 +15,9 @@ import java.util.Set;
 public class EmployeeDTO {
     private long id;
     private String name;
-    private Set<EmployeeSkill> skills;
-    private Set<DayOfWeek> daysAvailable;
-    private List<ScheduleDTO> schedules;
+    private Set<EmployeeSkill> skills = new HashSet<>();
+    private Set<DayOfWeek> daysAvailable = new HashSet<>();
+    private List<ScheduleDTO> schedules= new ArrayList<>();
 
 
     public long getId() {

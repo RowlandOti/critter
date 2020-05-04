@@ -5,6 +5,7 @@ import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
 import com.udacity.jdnd.course3.critter.user.db.EmployeeEntity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -15,9 +16,12 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "schedule")
-public class ScheduleEntity {
+public class ScheduleEntity implements Serializable {
+
+    private static final long serialVersionUID = 200L;
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @ManyToMany(mappedBy = "schedules", targetEntity = EmployeeEntity.class)

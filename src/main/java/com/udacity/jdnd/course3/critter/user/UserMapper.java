@@ -8,16 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserMapper {
-   public static CustomerDTO convertEntityToDTO(CustomerEntity entity) {
-        CustomerDTO dto = new CustomerDTO();
-        BeanUtils.copyProperties(entity, dto);
-        return dto;
-    }
 
     public static List<CustomerDTO> convertEntityToDTO(List<CustomerEntity> entities) {
         List<CustomerDTO> dtos = new ArrayList<>();
         entities.forEach(entity -> dtos.add(convertEntityToDTO(entity)));
         return dtos;
+    }
+
+    public static CustomerDTO convertEntityToDTO(CustomerEntity entity) {
+        CustomerDTO dto = new CustomerDTO();
+        BeanUtils.copyProperties(entity, dto);
+
+        entity.getPets().forEach( petEntity -> dto.getPetIds().add(petEntity.getId()));
+        return dto;
     }
 
     public static CustomerEntity convertDTOToEntity(CustomerDTO dto) {
