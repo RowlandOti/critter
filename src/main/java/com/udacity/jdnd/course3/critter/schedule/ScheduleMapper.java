@@ -9,7 +9,7 @@ import java.util.List;
 public class ScheduleMapper {
    public static ScheduleDTO convertEntityToDTO(ScheduleEntity entity) {
         ScheduleDTO dto = new ScheduleDTO();
-        BeanUtils.copyProperties(dto, entity);
+        BeanUtils.copyProperties(entity, dto);
         return dto;
     }
 
@@ -21,7 +21,7 @@ public class ScheduleMapper {
 
     public static ScheduleEntity convertDTOToEntity(ScheduleDTO dto) {
         ScheduleEntity entity = new ScheduleEntity();
-        BeanUtils.copyProperties(entity, dto);
+        BeanUtils.copyProperties(dto, entity);
         return entity;
     }
 }

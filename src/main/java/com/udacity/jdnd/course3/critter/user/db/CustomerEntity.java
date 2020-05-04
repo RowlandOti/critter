@@ -1,6 +1,10 @@
 package com.udacity.jdnd.course3.critter.user.db;
 
+import com.udacity.jdnd.course3.critter.pet.PetEntity;
+import com.udacity.jdnd.course3.critter.schedule.db.ScheduleEntity;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,9 +22,9 @@ public class CustomerEntity {
     private String phoneNumber;
     private String notes;
 
-    @Column
-    @ElementCollection(targetClass=Integer.class)
-    private List<Long> petIds;
+    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = PetEntity.class, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id")
+    private List<PetEntity> pets = new ArrayList<>();
 
     public long getId() {
         return id;
@@ -54,11 +58,11 @@ public class CustomerEntity {
         this.notes = notes;
     }
 
-    public List<Long> getPetIds() {
-        return petIds;
+    public List<PetEntity> getPets() {
+        return pets;
     }
 
-    public void setPetIds(List<Long> petIds) {
-        this.petIds = petIds;
+    public void setPets(List<PetEntity> pets) {
+        this.pets = pets;
     }
 }

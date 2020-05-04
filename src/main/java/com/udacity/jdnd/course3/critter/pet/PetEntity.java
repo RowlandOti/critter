@@ -1,10 +1,11 @@
 package com.udacity.jdnd.course3.critter.pet;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.udacity.jdnd.course3.critter.schedule.db.ScheduleEntity;
+import com.udacity.jdnd.course3.critter.user.db.CustomerEntity;
+
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Represents the form that pet request and response data takes.  Maps
@@ -18,9 +19,18 @@ public class PetEntity {
     private long id;
     private PetType type;
     private String name;
-    private long ownerId;
     private LocalDate birthDate;
     private String notes;
+
+    @ManyToOne(cascade = {CascadeType.MERGE}, targetEntity = CustomerEntity.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "customer_id")
+    private CustomerEntity customer;
+
+    @ManyToMany(cascade = CascadeType.ALL, targetEntity = ScheduleEntity.class, fetch = FetchType.LAZY)
+    @JoinTable(
+            joinColumns = @JoinColumn(referencedColumnName = "id", name = "pet_id"),
+            inverseJoinColumns = @JoinColumn(referencedColumnName = "id", name = "schedule_id"))
+    private List<ScheduleEntity> schedules;
 
     public PetType getType() {
         return type;
@@ -30,20 +40,20 @@ public class PetEntity {
         this.type = type;
     }
 
+    public CustomerEntity getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(CustomerEntity customer) {
+        this.customer = customer;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public long getOwnerId() {
-        return ownerId;
-    }
-
-    public void setOwnerId(long ownerId) {
-        this.ownerId = ownerId;
     }
 
     public LocalDate getBirthDate() {
@@ -68,5 +78,13 @@ public class PetEntity {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public List<ScheduleEntity> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(List<ScheduleEntity> schedules) {
+        this.schedules = schedules;
     }
 }

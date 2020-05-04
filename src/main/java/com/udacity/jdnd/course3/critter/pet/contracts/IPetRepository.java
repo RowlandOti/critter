@@ -1,13 +1,11 @@
 package com.udacity.jdnd.course3.critter.pet.contracts;
 
 import com.udacity.jdnd.course3.critter.pet.PetEntity;
+import com.udacity.jdnd.course3.critter.user.db.CustomerEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
 public interface IPetRepository extends JpaRepository<PetEntity, Long> {
-    //@Query("select p from pet p where p.ownerId = :ownerId")
-    List<PetEntity> findByOwnerId(long ownerId);
+    List<PetEntity> findByCustomer(CustomerEntity customer);
 }

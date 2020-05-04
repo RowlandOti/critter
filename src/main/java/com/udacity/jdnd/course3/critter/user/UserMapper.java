@@ -10,7 +10,7 @@ import java.util.List;
 public class UserMapper {
    public static CustomerDTO convertEntityToDTO(CustomerEntity entity) {
         CustomerDTO dto = new CustomerDTO();
-        BeanUtils.copyProperties(dto, entity);
+        BeanUtils.copyProperties(entity, dto);
         return dto;
     }
 
@@ -22,7 +22,7 @@ public class UserMapper {
 
     public static CustomerEntity convertDTOToEntity(CustomerDTO dto) {
         CustomerEntity entity = new CustomerEntity();
-        BeanUtils.copyProperties(entity, dto);
+        BeanUtils.copyProperties(dto, entity);
         return entity;
     }
 
@@ -31,7 +31,7 @@ public class UserMapper {
 
     public static EmployeeDTO convertEntityToDTO(EmployeeEntity entity) {
         EmployeeDTO dto = new EmployeeDTO();
-        BeanUtils.copyProperties(dto, entity);
+        BeanUtils.copyProperties(entity, dto);
         return dto;
     }
 
@@ -43,7 +43,7 @@ public class UserMapper {
 
     public static EmployeeEntity convertDTOToEntity(EmployeeDTO dto) {
         EmployeeEntity entity = new EmployeeEntity();
-        BeanUtils.copyProperties(entity, dto);
+        BeanUtils.copyProperties(dto, entity);
         return entity;
     }
 }

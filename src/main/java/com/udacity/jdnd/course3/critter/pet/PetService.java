@@ -2,6 +2,8 @@ package com.udacity.jdnd.course3.critter.pet;
 
 import com.udacity.jdnd.course3.critter.pet.contracts.IPetRepository;
 import com.udacity.jdnd.course3.critter.pet.contracts.IPetService;
+import com.udacity.jdnd.course3.critter.user.db.CustomerEntity;
+import com.udacity.jdnd.course3.critter.user.db.contract.ICustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,9 @@ public class PetService implements IPetService {
 
     @Autowired
     private IPetRepository petRepository;
+
+    @Autowired
+    private ICustomerRepository customerRepository;
 
     @Override
     public List<PetEntity> getPets() {
@@ -31,6 +36,7 @@ public class PetService implements IPetService {
 
     @Override
     public List<PetEntity> getPetsByOwnerId(long ownerId) {
-        return petRepository.findByOwnerId(ownerId);
+        CustomerEntity customer = customerRepository.getOne(ownerId);
+        return petRepository.findByCustomer(customer);
     }
 }

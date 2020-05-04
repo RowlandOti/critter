@@ -1,19 +1,23 @@
 package com.udacity.jdnd.course3.critter.user.db;
 
+import com.google.common.collect.Lists;
 import com.udacity.jdnd.course3.critter.pet.PetEntity;
 import com.udacity.jdnd.course3.critter.pet.contracts.IPetRepository;
-import com.udacity.jdnd.course3.critter.pet.contracts.IPetService;
+import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
 import com.udacity.jdnd.course3.critter.user.db.contract.ICustomerRepository;
 import com.udacity.jdnd.course3.critter.user.db.contract.IEmployeeRepository;
 import com.udacity.jdnd.course3.critter.user.db.contract.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.time.DayOfWeek;
+import java.util.*;
 
 @Service
 public class UserService implements IUserService {
+
+    @Autowired
+    private IPetRepository petRepository;
 
     @Autowired
     private ICustomerRepository customerRepository;
@@ -22,7 +26,7 @@ public class UserService implements IUserService {
     private IEmployeeRepository employeeRepository;
 
     @Override
-    public List<EmployeeEntity> getEmployees() {
+    public List<EmployeeEntity> findAll() {
         return employeeRepository.findAll();
     }
 
@@ -47,12 +51,32 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Optional<CustomerEntity> getCustomerById(long petId) {
+    public Optional<CustomerEntity> findById(long petId) {
         return customerRepository.findById(petId);
     }
 
     @Override
     public CustomerEntity getCustomerByPetId(long petId) {
-        return customerRepository.findByPetId(petId);
+        PetEntity pet = petRepository.getOne(petId);
+        return customerRepository.findByPetsIn(Lists.newArrayList(pet));
+    }
+
+    @Override
+    public List<EmployeeEntity> getEmployeeForService(Set<EmployeeSkill> skills, Set<DayOfWeek> daysAvailable) {
+        List<EmployeeEntity> employeesSuspected = employeeRepository.findAllBySkillsInAndDaysAvailableIn(skills, daysAvailable);
+
+        List<EmployeeEntity> employeesForService = new ArrayList<>();
+
+        employeesSuspected.forEach(employee -> {
+            Set<EmployeeSkill> intersectionSkills = new HashSet<>(skills);
+            intersectionSkills.retainAll(employee.getSkills());
+
+            // Does employee possess required set of skills
+            if((intersectionSkills.size() == skills.size())) {
+                employeesForService.add(employee);
+            }
+        });
+
+        return employeesForService;
     }
 }

@@ -1,11 +1,12 @@
 package com.udacity.jdnd.course3.critter.user.db;
 
+import com.udacity.jdnd.course3.critter.schedule.db.ScheduleEntity;
 import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
 import org.hibernate.annotations.Nationalized;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -35,6 +36,11 @@ public class EmployeeEntity {
     @CollectionTable(name = "days", joinColumns = @JoinColumn(name = "employee_id"))
     private Set<DayOfWeek> daysAvailable;
 
+    @ManyToMany(cascade = CascadeType.ALL, targetEntity = ScheduleEntity.class, fetch = FetchType.LAZY)
+    @JoinTable(
+            joinColumns = @JoinColumn(referencedColumnName = "id", name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(referencedColumnName = "id", name = "schedule_id"))
+    private List<ScheduleEntity> schedules;
 
 
     public long getId() {
@@ -67,5 +73,13 @@ public class EmployeeEntity {
 
     public void setDaysAvailable(Set<DayOfWeek> daysAvailable) {
         this.daysAvailable = daysAvailable;
+    }
+
+    public List<ScheduleEntity> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(List<ScheduleEntity> schedules) {
+        this.schedules = schedules;
     }
 }
