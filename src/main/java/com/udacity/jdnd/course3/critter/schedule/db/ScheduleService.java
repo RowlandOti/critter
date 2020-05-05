@@ -18,7 +18,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-//@Transactional
+@Transactional
 @Service
 public class ScheduleService implements IScheduleService {
 

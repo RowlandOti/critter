@@ -6,10 +6,12 @@ import com.udacity.jdnd.course3.critter.user.db.CustomerEntity;
 import com.udacity.jdnd.course3.critter.user.db.contract.ICustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+@Transactional
 @Service
 public class PetService implements IPetService {
 
