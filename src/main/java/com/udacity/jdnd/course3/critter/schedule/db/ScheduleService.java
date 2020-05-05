@@ -14,10 +14,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-@Transactional
+//@Transactional
 @Service
 public class ScheduleService implements IScheduleService {
 
@@ -52,17 +53,19 @@ public class ScheduleService implements IScheduleService {
             entity.getPets().add(pet);
         });
 
-        ScheduleEntity schedule =  scheduleRepository.save(entity);
+        ScheduleEntity schedule = scheduleRepository.save(entity);
 
-        entity.getEmployees().forEach(employee -> {
+        for (int i = 0; i < entity.getEmployees().size(); i++) {
+            EmployeeEntity employee = entity.getEmployees().get(i);
             employee.getSchedules().add(schedule);
             employeeRepository.save(employee);
-        });
+        }
 
-        entity.getPets().forEach(pet -> {
+        for (int i = 0; i < entity.getPets().size(); i++) {
+            PetEntity pet = entity.getPets().get(i);
             pet.getSchedules().add(schedule);
             petRepository.save(pet);
-        });
+        }
 
         return schedule;
     }
