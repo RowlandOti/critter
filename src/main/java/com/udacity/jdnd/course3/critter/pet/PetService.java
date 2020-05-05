@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,7 +58,10 @@ public class PetService implements IPetService {
 
     @Override
     public List<PetEntity> getPetsByOwnerId(long ownerId) {
-        CustomerEntity customer = customerRepository.getOne(ownerId);
-        return customer.getPets();
+        Optional<CustomerEntity> customerOpt = customerRepository.findById(ownerId);
+        if(customerOpt.isPresent()) {
+            return customerOpt.get().getPets();
+        }
+        return Collections.emptyList();
     }
 }

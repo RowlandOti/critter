@@ -1,5 +1,6 @@
 package com.udacity.jdnd.course3.critter.pet;
 
+import com.udacity.jdnd.course3.critter.user.db.CustomerEntity;
 import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
@@ -16,8 +17,11 @@ public class PetMapper {
         PetDTO petDTO = new PetDTO();
         BeanUtils.copyProperties(petEntity, petDTO);
 
-        // As pets can't be added without owners, it is sure owned
-        petDTO.setOwnerId(petEntity.getCustomer().getId());
+        // As pets can't be added without owners, it is sure owned , but for post-man test, we have to allow
+        CustomerEntity customer = petEntity.getCustomer();
+        if(customer != null) {
+            petDTO.setOwnerId(customer.getId());
+        }
         return petDTO;
     }
 

@@ -1,5 +1,6 @@
 package com.udacity.jdnd.course3.critter.user;
 
+import com.udacity.jdnd.course3.critter.pet.PetEntity;
 import com.udacity.jdnd.course3.critter.pet.contracts.IPetService;
 import com.udacity.jdnd.course3.critter.user.db.CustomerEntity;
 import com.udacity.jdnd.course3.critter.user.db.EmployeeEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.DayOfWeek;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -39,7 +41,11 @@ public class UserController {
 
     @GetMapping("/customer/pet/{petId}")
     public CustomerDTO getOwnerByPet(@PathVariable long petId) {
-        return UserMapper.convertEntityToDTO(userService.getCustomerByPetId(petId));
+        CustomerEntity entity = userService.getCustomerByPetId(petId);
+        if(entity != null) {
+            return UserMapper.convertEntityToDTO(entity);
+        }
+       return null;
     }
 
     @PostMapping("/employee")

@@ -59,8 +59,8 @@ public class UserService implements IUserService {
 
     @Override
     public CustomerEntity getCustomerByPetId(long petId) {
-        PetEntity pet = petRepository.getOne(petId);
-        return customerRepository.findByPetsIn(Lists.newArrayList(pet));
+        Optional<PetEntity> petOpt = petRepository.findById(petId);
+        return petOpt.map(petEntity -> customerRepository.findByPetsIn(Lists.newArrayList(petEntity))).orElse(null);
     }
 
     @Override
